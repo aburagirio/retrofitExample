@@ -1,4 +1,4 @@
-package com.example.retrofit
+package com.example.retrofitExample
 
 import android.os.Bundle
 import android.util.Log
@@ -11,23 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.retrofit.dataClasses.Post
-import com.example.retrofit.interfaces.JsonPlaceHolderGetter
-import com.example.retrofit.ui.theme.RetrofitTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.lifecycleScope
+import com.example.retrofitExample.interfaces.JsonPlaceHolderAPI
+import com.example.retrofitExample.ui.theme.RetrofitTheme
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
-
-    /**
-     * UIStateHolderのインスタンス
-     */
-    private val uiStateHolder = UIStateHolder()
 
     /**
      * Retrofitのインスタンス
@@ -40,30 +33,12 @@ class MainActivity : ComponentActivity() {
         .build()
 
     /**
-     * JsonPlaceHolderGetterのインスタンス
+     * JsonPlaceHolderAPIのインスタンス
      *
      * https://jsonplaceholder.typicode.com/ から記事を取得する
      *
      */
-    private val jsonPlaceHolderGetter = retrofit.create<JsonPlaceHolderGetter>()
-
-    /**
-     * retrofit2.Callbackのインスタンス
-     * Post型のインスタンスのListを得田場合と失敗した場合を捕捉する
-     */
-    private val callback: Callback<List<Post>> = object: Callback<List<Post>> {
-        override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-            Log.d(TAG, "onResponse: "+ response.body()?.size)
-            val body = response.body()
-            if (body != null) {
-                uiStateHolder.updatePostsList(body)
-            }
-        }
-
-        override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-
-        }
-    }
+    private val jsonPlaceHolderAPI = retrofit.create<JsonPlaceHolderAPI>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,11 +59,13 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-        val call = jsonPlaceHolderGetter.getPosts()
-        call.enqueue(callback)
+        lifecycleScope.launch {
+            val postList = jsonPlaceHolderAPI.getPosts()
+            val text = "postList size is ${postList.size}"
+            Log.d(TAG, "onResume: $text")
+            Log.d(TAG, "onResume: ${postList[0].text}")
+        }
     }
-
-
 }
 
 @Composable

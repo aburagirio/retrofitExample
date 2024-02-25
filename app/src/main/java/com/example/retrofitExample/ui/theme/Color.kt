@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.theme
+package com.example.retrofitExample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

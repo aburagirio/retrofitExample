@@ -1,4 +1,4 @@
-package com.example.retrofit
+package com.example.retrofitExample
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
