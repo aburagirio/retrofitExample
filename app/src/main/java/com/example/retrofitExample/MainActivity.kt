@@ -14,12 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.example.retrofitExample.interfaces.JsonPlaceHolderAPI
 import com.example.retrofitExample.ui.theme.RetrofitTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 private const val TAG = "MainActivity"
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     /**
