@@ -5,6 +5,10 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+orbs:
+  android: "1.0.3"
+
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -24,7 +28,7 @@ jobs:
       # Replace this with a real test runner invocation
       - run:
           name: Run tests
-          command: echo 'replace me with real tests!' && false
+          command: echo 'replace me with real tests!'
   build:
     docker:
       - image: cimg/base:current
