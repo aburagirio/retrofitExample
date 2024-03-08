@@ -6,7 +6,7 @@
 version: 2.1
 
 orbs:
-  android: "1.0.3"
+  android: circleci/android@2.5.0
 
 
 # Define a job to be invoked later in a workflow.
