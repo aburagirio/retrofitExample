@@ -15,7 +15,7 @@ jobs:
   unit-test:
     executor:
       name: android/android-machine
-      resource-class: xlarge
+      #resource-class: xlarge
       tag: 2024-03
     steps:
       - checkout
