@@ -25,9 +25,6 @@ jobs:
           test-command: ./gradlew testDebug
       - android/save-gradle-cache
       - android/save-build-cache
-      - persist_to_workspace:
-          root: ~/
-          paths: []
   test:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
