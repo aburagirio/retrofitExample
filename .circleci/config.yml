@@ -12,6 +12,21 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
+  unit-test:
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - android/run-tests:
+          test-command: ./gradlew testDebug
+      - android/save-gradle-cache
+      - android/save-build-cache
+      - persist_to_workspace:
+          root: ~/
+          paths: []
   test:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
@@ -55,9 +70,11 @@ workflows:
   example:
     jobs:
       - test
+      - unit-test
       - build:
           requires:
             - test
+            - unit-test
       - deploy:
           requires:
             - test
