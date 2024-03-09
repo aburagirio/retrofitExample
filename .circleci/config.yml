@@ -32,8 +32,8 @@ jobs:
       tag: 2024.01.1
     steps:
       - checkout
-      - android/start-emulator-and-run-tests
-          #test-command: ./gradlew connectedDebugAndroidTest
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew connectedDebugAndroidTest
           #system-image: system-images;android-30;default;x86
 
   test:
