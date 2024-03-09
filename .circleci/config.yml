@@ -32,9 +32,10 @@ jobs:
       tag: 2024.01.1
     steps:
       - checkout
-      - android/start-emulator-and-run-tests:
-          test-command: ./gradlew connectedDebugAndroidTest
-          system-image: system-images;android-30;default;x86
+      - android/start-emulator-and-run-tests
+          #test-command: ./gradlew connectedDebugAndroidTest
+          #system-image: system-images;android-30;default;x86
+
   test:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
