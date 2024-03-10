@@ -4,13 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.retrofitExample.dataClasses.Post
@@ -80,8 +93,46 @@ fun JsonPlaceHolderUI(
         }
         is JsonPlaceHolderUIState.Success -> {
             val p = jsonPlaceHolderUIState.posts
-            Text(text = p.size.toString(), modifier = modifier)
+            JsonPlaceHolderLazyList(items = p)
         }
+    }
+}
+
+@Composable
+fun JsonPlaceHolderLazyList(
+    items: List<Post>,
+    modifier: Modifier = Modifier
+){
+    LazyColumn(
+        modifier = modifier
+    ) {
+        items(count = items.size){
+            ListItem(item = items[it])
+        }
+    }
+}
+
+@Composable
+fun ListItem(
+    item: Post,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        border = BorderStroke(width = Dp.Hairline, color = Color.Black),
+        ){
+        Text(
+            text = item.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(corner = CornerSize(10.dp)))
+                .padding(4.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
 
